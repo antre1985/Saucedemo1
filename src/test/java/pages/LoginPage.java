@@ -7,6 +7,7 @@ public class LoginPage {
     private final By usernameInput = By.cssSelector("[placeholder='Username']");
     private final By passwordInput = By.cssSelector("[placeholder='Password']");
     private final By loginButton = By.cssSelector("[data-test='login-button']");
+    private final By errorMessage = By.cssSelector("[data-test='error']");
 
     WebDriver driver;
 
@@ -25,10 +26,10 @@ public class LoginPage {
     }
 
     public boolean isErrorVisible() {
-       return driver.findElement(By.cssSelector("[data-test='error']")).isDisplayed();
+       return driver.findElement(errorMessage).isDisplayed();
     }
 
     public String getErrorText() {
-      return driver.findElement(By.cssSelector("[data-test='error']")).getText();
+      return driver.findElement(errorMessage).getText();
     }
 }
