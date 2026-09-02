@@ -1,18 +1,31 @@
 package tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
 public class LoginTest extends BaseTest {
+    @DataProvider
+    public Object[][] loginData() {
+        return new Object[][]{
+                {"locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out."},
+                {"Standard_user", "secret_sauce", "Epic sadface: Username and password do not match any user in this service"},
+                {"", "secret_sauce", "Epic sadface: Username is required"},
+                {"Standard_user", "", "Epic sadface: Password is required"}
+        };
+    }
 
-    @Test
-    public void lockedUserTest() {
+    @Test(dataProvider = "loginData")
+    public void incorrectDataLoginTest(String user, String password, String errorMessage) {
         loginPage.open();
-        loginPage.login("locked_out_user", "secret_sauce");
+        loginPage.login(user, password);
 
-        assertTrue(loginPage.isErrorVisible(), "Error message does not appear");
-        assertEquals(loginPage.getErrorText(), "Epic sadface: Sorry, this user has been locked out.");
+        boolean isVisible = loginPage.isErrorVisible();
+        String errorText = loginPage.getErrorText();
+
+        assertTrue(isVisible, "Error message does not appear");
+        assertEquals(errorText, errorMessage, "Error text does not match");
     }
 
     @Test
@@ -23,41 +36,5 @@ public class LoginTest extends BaseTest {
         boolean pageTitleVisible = productsPage.isPageTitleVisible();
         assertTrue(pageTitleVisible);
         assertEquals(productsPage.getPageTitle(), "Products");
-    }
-
-    @Test
-    public void emptyLoginUserTest() {
-        loginPage.open();
-        loginPage.login("", "secret_sauce");
-
-        boolean isVisible = loginPage.isErrorVisible();
-        String errorText = loginPage.getErrorText();
-
-        assertTrue(isVisible);
-        assertEquals(errorText, "Epic sadface: Username is required");
-    }
-
-    @Test
-    public void EmptyPasswordUserTest() {
-        loginPage.open();
-        loginPage.login("Standard_user", "");
-
-        boolean isVisible = loginPage.isErrorVisible();
-        String errorText = loginPage.getErrorText();
-
-        assertTrue(isVisible);
-        assertEquals(errorText, "Epic sadface: Password is required");
-    }
-
-    @Test
-    public void loginWithUppercaseTest() {
-        loginPage.open();
-        loginPage.login("Standard_user", "secret_sauce");
-
-        boolean isVisible = loginPage.isErrorVisible();
-        String errorText = loginPage.getErrorText();
-
-        assertTrue(isVisible, "Error message does not appear");
-        assertEquals(errorText, "Epic sadface: Username and password do not match any user in this service");
     }
 }
