@@ -2,13 +2,13 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class ProductsPage {
+public class ProductsPage extends BasePage {
     private final By pageTitle = By.cssSelector("[data-test='title']");
-    WebDriver driver;
 
     public ProductsPage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
     public boolean isPageTitleVisible() {
@@ -16,6 +16,7 @@ public class ProductsPage {
     }
 
     public String getPageTitle() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle));
         return driver.findElement(pageTitle).getText();
     }
 }
