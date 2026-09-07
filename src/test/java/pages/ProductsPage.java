@@ -5,7 +5,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class ProductsPage extends BasePage {
+    public static final String ADD_TO_CART_PATTERN = "//*[text()='%s']" +
+            "/ancestor::div[@class='inventory_item']//child::button[text()='Add to cart']";
     private final By pageTitle = By.cssSelector("[data-test='title']");
+    private final By cartBadge = By.cssSelector(DATA_TEST_PATTERN.formatted("shopping-cart-badge"));
 
     public ProductsPage(WebDriver driver) {
         super(driver);
@@ -18,5 +21,27 @@ public class ProductsPage extends BasePage {
     public String getPageTitle() {
         wait.until(ExpectedConditions.visibilityOfElementLocated(pageTitle));
         return driver.findElement(pageTitle).getText();
+    }
+
+    public void addGoodsToCart(String goodsName) {
+        By addToCartBtn = By.xpath(ADD_TO_CART_PATTERN.formatted(goodsName));
+        driver.findElement(addToCartBtn).click();
+    }
+
+    public void addGoodsToCart(int goodsIndex) {
+        By addToCartBtn = By.xpath("//button[text()='Add to cart']");
+        driver.findElements(addToCartBtn).get(goodsIndex).click();
+    }
+
+    public String checkCountersValue() {
+      return driver.findElement(cartBadge).getText();
+    }
+
+    public String checkCountersColor() {
+      return driver.findElement(cartBadge).getCssValue("background-color");
+    }
+
+    public Boolean isCartBadgeVisible() {
+      return driver.findElement(cartBadge).isDisplayed();
     }
 }
