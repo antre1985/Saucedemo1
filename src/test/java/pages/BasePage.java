@@ -10,6 +10,7 @@ public class BasePage {
     WebDriverWait wait;
 
     public static final String BASE_URL = "https://www.saucedemo.com";
+    public static final String DATA_TEST_PATTERN = "[data-test='%s']";
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
