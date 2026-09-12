@@ -25,6 +25,7 @@ public class ProductsTest extends BaseTest {
         }
 
         productsPage.addGoodsToCart(0);
+
         assertTrue(productsPage.isCartBadgeVisible(), "Cart badge should be visible");
         assertEquals(productsPage.checkCountersValue(), "4");
         assertEquals(productsPage.checkCountersColor(), "rgba(226, 35, 26, 1)");
