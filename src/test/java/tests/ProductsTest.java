@@ -17,7 +17,6 @@ public class ProductsTest extends BaseTest {
 
     @Test()
     public void checkGoodsAdded() {
-        System.out.println("checkGoodsAdded is running in thread: " + Thread.currentThread().getId());
 
         loginPage.open();
         loginPage.login(withAdminPermission());
