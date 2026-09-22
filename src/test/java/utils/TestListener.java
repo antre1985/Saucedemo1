@@ -34,7 +34,6 @@ public class TestListener implements ITestListener {
         WebDriver driver = (WebDriver) iTestResult.getTestContext().getAttribute("driver");
         highlightElement(driver);
         takeScreenshot(driver);
-
     }
 
     @Override
