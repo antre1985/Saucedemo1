@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import user.User;
@@ -12,6 +13,9 @@ import static user.UserFactory.withInvalidCredentials;
 import static user.UserFactory.withEmptyUsername;
 import static user.UserFactory.withEmptyPassword;
 
+@Epic("Saucedemo")
+@Feature("Авторизация")
+@Owner("Антон")
 public class LoginTest extends BaseTest {
 
         @DataProvider
@@ -25,8 +29,8 @@ public class LoginTest extends BaseTest {
     }
 
     @Test(dataProvider = "loginData")
+    @Story("Некорректный логин")
     public void incorrectDataLoginTest(User user, String errorMessage) {
-        System.out.println("incorrectDataLoginTest is running in thread: " + Thread.currentThread().getId());
 
         loginPage.open();
         loginPage.login(user);
@@ -39,8 +43,9 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
+    @Story("Корректный логин")
+    @Severity(SeverityLevel.BLOCKER)
     public void correctUserTest() {
-        System.out.println("correctUserTest is running in thread: " + Thread.currentThread().getId());
 
         loginPage.open();
         loginPage.login(withAdminPermission());

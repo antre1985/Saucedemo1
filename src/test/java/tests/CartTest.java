@@ -1,6 +1,9 @@
 package tests;
 
 import enums.TitleNaming;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import user.UserFactory;
@@ -11,10 +14,13 @@ import static enums.TitleNaming.PRODUCTS;
 import static org.testng.Assert.*;
 import static user.UserFactory.withAdminPermission;
 
+@Epic("Saucedemo")
+@Feature("Корзина")
 public class CartTest extends BaseTest {
     SoftAssert soft = new SoftAssert();
 
-    @Test()
+    @Test(description = "Проверка товаров в корзине после добавления")
+    @Story("Просмотр содержимого корзины")
     public void checkGoodsInCart() {
         List<String> goodsList =
                 List.of("Sauce Labs Fleece Jacket",
